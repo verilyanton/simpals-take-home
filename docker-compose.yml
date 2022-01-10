@@ -3,6 +3,7 @@ version: '3.9'
 services:
   mongodb:
     image: mongo:4.4.11-rc1-focal
+    container_name: simpals_mongodb
     ports:
       - "27017:27017"
     volumes:
@@ -10,7 +11,11 @@ services:
 
   app:
     build: .
-    links:
-      - mongodb
+    container_name: simpals_app
     ports:
       - "8888:8888"
+    volumes:
+      - .:/app
+    env_file: .env
+    depends_on:
+      - mongodb
