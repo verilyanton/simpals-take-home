@@ -30,7 +30,12 @@ class MainHandler(tornado.web.RequestHandler):
         else:
             self.write("<h2>Ads</h1>")
             for ad in ads:
-                self.write(f"id: {ad['id']}, title: {ad['title']}<br>")
+                if 'price' in ad:
+                    price = f"{ad['price']['value']} {ad['price']['unit']}"
+                else:
+                    price = '---'
+
+                self.write(f"id: {ad['id']}, price: {price}, title: {ad['title']}<br>")
 
 
 def make_app():

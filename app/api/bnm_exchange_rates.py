@@ -10,7 +10,7 @@ CURRENCIES_MAP = {
 }
 
 
-def parse_rate(rates_xml: bytes, currency_code: str):
+def parse_rate(rates_xml: bytes, currency_code: str) -> float:
     currency_id = CURRENCIES_MAP[currency_code]
 
     dom = minidom.parseString(rates_xml)
@@ -24,7 +24,7 @@ def parse_rate(rates_xml: bytes, currency_code: str):
 class BnmExchangeRatesApi:
 
     @classmethod
-    async def fetch_rate(cls):
+    async def fetch_rate(cls, currency_code: str = 'EUR'):
         tz = pytz.timezone('Europe/Chisinau')
         current_date = datetime.now(tz).strftime('%d.%m.%Y')
         url = f'https://www.bnm.md/en/official_exchange_rates?get_xml=1&date={current_date}'
